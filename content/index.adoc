@@ -25,7 +25,11 @@ image::qrcode.png["QRCode to this presentation",height=150]
 // Chapitre Welcome.adoc
 include::./chapitres/welcome.adoc[leveloffset=1]
 
+// Chapitre intro.adoc
 include::./chapitres/intro.adoc[leveloffset=1]
+
+// Chapitre go-fundamentals.adoc
+include::./chapitres/go-fundamentals.adoc[leveloffset=1]
 
 // Chapitre VCS - Git
 include::./chapitres/vcs.adoc[leveloffset=1]

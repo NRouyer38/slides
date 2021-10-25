@@ -1,0 +1,181 @@
+= Ecrire du code!
+
+== Hello golang!
+
+== Golang, kesako? (1/2)
+
+- Langage typé statiquement
+- Génère un binaire executable
+- Syntaxe proche du C.
+- Langage facilitement les traitements concurents et le réseau.
+
+== Golang, kesako? (2/2)
+
+- Langage crée en 2009 en interne chez Google
+- 1.0 livrée en Mars 2012
+- Maintenant au coeur de nombreux projets (Docker, Kubernetes, Prometheus, CockroachDB...)
+- Version actuelle 1.17.x
+
+== Pourquoi un autre langage pour ce cours?
+
+- Simple dans son design (mais pas simpliste!)
+- Volontairement explicite
+- Librairie standard extrêmement fournie
+- Outillage pour le CI/CD très complet
+
+== Démarer son environement gitpod
+
+TODO BACKPORT
+
+== Un premier programme écrit en go
+
+Copiez le code donné dans un fichier `main.go`
+
+```golang
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello ENSG!")
+}
+```
+
+== Compiler et executer un programme (1/2)
+
+```bash
+# -o nom du fichier de sortie du compilateur.
+go build -o main ./main.go
+
+# Inspectez le fichier généré par le compilateur
+file main
+
+# C'est un executable, executons le!
+./main
+```
+
+== Compiler et executer un programme 2/2
+
+```bash
+# Compile et execute votre programe, en une seule commande;
+go run ./main.go
+```
+
+== Anatomie d'un fichier .go
+
+```golang
+// Donne le package dans lequel le fichier est défini.
+package main
+
+// Importe le package `fmt` de la librairie standard dans le fichier pour utiliser les symboles exposés par ce dernier.
+import "fmt"
+
+// Implementation de la fonction main.
+func main() {
+    // Appel de la fontion `Println` (Print Line) du package `fmt`
+    // avec en argument la chaine de carractère "Hello ENSG!"
+    fmt.Println("Hello ENSG!")
+}
+```
+
+== Variables et Types
+
+- est un langage typé statiquement: Le type d'une variable une fois déclaré ne peut être changé.
+- propose des types scalaires communs (string, int, float, bool) et moins communs (rune, byte)
+- Des collections (maps, array  et slices)...
+- Des type complexes (structures)
+- Des pointeurs (*int, *string)
+- Et des interfaces (error, interface{}, io.Reader...)
+
+(Bien que parfois frustrant, le compilateur est votre ami)
+
+== Déclarer et Manipuler une Variable (1/2)
+
+```golang
+// Declare et initialise a sa valeur par defaut (zero value) une variable de type chaine de caractères.
+var chaine string
+
+// Assigne la valeur banane a la variable chaine.
+chaine = "banane"
+
+// Assigne la valeur 40 a la variable chaine.
+chaine = 40 // Invalide: la valeur 40 n'est pas convertible (implicitement) en chaine de caractère
+
+// Assigne la valeur 40 a la variabe 'entier'.
+entier = 40 // Invalide: la variable entier n'est pas déclarée.
+```
+
+== Déclarer et Manipuler une Variable (2/2)
+
+```golang
+// Declare et initialise a la valeur 42 une variable appelée entier de type int.
+var entier int = 42
+
+// Assigne la valeur 12 a la variable entier.
+entier = 12
+
+// Declare et initialise a la valeur 43 une variable appelée autreEntier
+// du type de la valeur à gauche (ici entier)
+autreEntier := 43
+// equivaut a l'expression suivante
+// var autreEntier int = 43
+```
+
+== Structures de contrôle
+
+```golang
+// Sans parenthèses, mais pas d'autres surprises :)
+if a > 4 {
+
+} else if c < 2 {
+
+} else {
+
+}
+```
+
+```golang
+switch maVariable {
+  case 4, 3:
+    // executé si maVariabe est a 4 ou 3
+  case 2, 1:
+    // executé si maVariable est a 2 ou 1
+  default:
+    // executé si mavariable a une autre valuer.
+}
+```
+
+== Déclarer et Appeler une fonction (1/2)
+
+- Une fonction en go est déclarée à l'aide du mot clé `func`
+- Accepte des arguments et retourne une ou plusieurs valeurs
+- Conventionellement, une fonction qui peut échouer retourne un resultat et une erreur
+
+== Déclarer et Appeler une fonction (2/2)
+
+```golang
+// Declare une fonction `length`
+func length(str string) (int, error) {
+  if str == "" {
+    return 0, errors.New("empty string")
+  }
+
+  return len(str), nil
+}
+```
+
+```golang
+func main() {
+  // Déclare et initialise les variables taille et err avec les
+  // valeurs de retour de la fonction length.
+  taille, err := length("superchaine")
+
+  if err != nil {
+    // gère le cas d'erreur, explicitement :-)
+    fmt.Println("Une erreur s'est produite", err)
+    return
+  }
+
+  fmt.Println("La taille de la chaine est", taille)
+}
+```
