@@ -145,6 +145,39 @@ switch maVariable {
 }
 ```
 
+== Structures (1/2)
+
+- Une structure est un type composés de plusieurs autres types.
+- Ces valeurs sont appelées `attributs`
+- La valeur par défaut d'une structure est la valeur par defaut des types le composant.
+
+== Structures (2/2)
+
+```golang
+// Declare la structure Dog, composée d'un attribut Name de type string et d'un attribut Age de type entier.
+type Dog struct {
+  Name  string
+  Age   int
+}
+```
+
+```golang
+func main() {
+  // ...
+  // Declare et initialize a la valeur par défaut la variable dog1 de type Dog.
+  var dog1 Dog // Name == "" (zero value string) et Age == 0 (zero value int)
+
+  // Declare et initialize aux valeurs indiqués la variable dog2 de type Dog.
+  dog2 := Dog{
+    Name: "Michel",
+    Age:  42,
+  }
+
+  fmt.Println(dog1, dog2)
+  // ...
+}
+```
+
 == Déclarer et Appeler une fonction (1/2)
 
 - Une fonction en go est déclarée à l'aide du mot clé `func`
@@ -154,21 +187,27 @@ switch maVariable {
 == Déclarer et Appeler une fonction (2/2)
 
 ```golang
-// Declare une fonction `length`
-func length(str string) (int, error) {
-  if str == "" {
-    return 0, errors.New("empty string")
+// Declare une fonction `Greet`
+func Greet(dog Dog) (string, error) {
+  if dog.Name == "" {
+    return string, errors.New("dog has no name :scream:")
   }
 
-  return len(str), nil
+  // Concactene la chaine de catctère "Hello ",  avec le nom du chien
+  return "Hello " + dog.Name, nil
 }
 ```
 
 ```golang
 func main() {
-  // Déclare et initialise les variables taille et err avec les
-  // valeurs de retour de la fonction length.
-  taille, err := length("superchaine")
+  doggy := Dog {
+    Name: "michel",
+    Age:  42
+  }
+
+  // Déclare et initialise les variables message et err avec les
+  // valeurs de retour de la fonction Greet.
+  message, err := Greet(doggy)
 
   if err != nil {
     // gère le cas d'erreur, explicitement :-)
@@ -176,6 +215,25 @@ func main() {
     return
   }
 
-  fmt.Println("La taille de la chaine est", taille)
+  fmt.Println("Greeting message is", message)
+}
+```
+
+== Que va afficher ce programme?
+
+```golang
+func changeName(dog Dog) {
+  dog.Name = "roberto"
+}
+
+func main() {
+  dog := Dog {
+    Name: "jean-claude",
+    Age:  50,
+  }
+
+  changeName(dog)
+
+  fmt.Println("Hello", dog.Name)
 }
 ```
