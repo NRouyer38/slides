@@ -154,7 +154,7 @@ switch maVariable {
 == Structures (2/2)
 
 ```golang
-// Declare la structure Dog, composée d'un attribut Name de type string et d'un attribut Age de type entier.
+// Declare un type Dog de type structure, composée d'un attribut Name de type string et d'un attribut Age de type entier.
 type Dog struct {
   Name  string
   Age   int
@@ -237,3 +237,9 @@ func main() {
   fmt.Println("Hello", dog.Name)
 }
 ```
+
+== Passage par Valeur vs Passage par Référence?
+
+== Arrays & Slices
+
+== Maps
