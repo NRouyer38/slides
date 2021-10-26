@@ -70,7 +70,8 @@ package main
 // Importe le package `fmt` de la librairie standard dans le fichier pour utiliser les symboles exposés par ce dernier.
 import "fmt"
 
-// Implementation de la fonction main.
+// Declaration et implementation de la fonction main.
+// Fonction particulière car c'est le point d'entrée de votre programe.
 func main() {
     // Appel de la fontion `Println` (Print Line) du package `fmt`
     // avec en argument la chaine de carractère "Hello ENSG!"
@@ -78,18 +79,23 @@ func main() {
 }
 ```
 
-== Variables et Types
+== Variables et Types (1/2)
 
-- est un langage typé statiquement: Le type d'une variable une fois déclaré ne peut être changé.
-- propose des types scalaires communs (string, int, float, bool) et moins communs (rune, byte)
+Golang est un langage typé statiquement: Le type d'une variable une fois déclaré ne peut être changé.
+
+(Bien que parfois frustrant, le compilateur est votre ami)
+
+== Variables et Types (2/2)
+
+Golang propose les types suivants
+
+- Des types scalaires communs (string, int, float, bool) et moins communs (rune, byte)
 - Des collections (maps, array  et slices)...
 - Des type complexes (structures)
 - Des pointeurs (*int, *string)
 - Et des interfaces (error, interface{}, io.Reader...)
 
-(Bien que parfois frustrant, le compilateur est votre ami)
-
-== Déclarer et Manipuler une Variable (1/2)
+== Déclarer et Manipuler une Variable (1/3)
 
 ```golang
 // Declare et initialise a sa valeur par defaut (zero value) une variable de type chaine de caractères.
@@ -105,7 +111,7 @@ chaine = 40 // Invalide: la valeur 40 n'est pas convertible (implicitement) en c
 entier = 40 // Invalide: la variable entier n'est pas déclarée.
 ```
 
-== Déclarer et Manipuler une Variable (2/2)
+== Déclarer et Manipuler une Variable (2/3)
 
 ```golang
 // Declare et initialise a la valeur 42 une variable appelée entier de type int.
@@ -116,9 +122,29 @@ entier = 12
 
 // Declare et initialise a la valeur 43 une variable appelée autreEntier
 // du type de la valeur à gauche (ici entier)
+// C'est ce que l'on appelle de l'inference de type.
 autreEntier := 43
 // equivaut a l'expression suivante
 // var autreEntier int = 43
+```
+
+== Déclarer et Manipuler une Variable (2/3)
+
+```golang
+// Déclare et initialise une variable entier1 de type entier a la valeur 42.
+entier1 := 45
+
+// Déclare et initialise une variable entier2 du type de la variabe entier1
+// et **copie** la valeur de entier1 dans entier2.
+entier2 := entier1
+
+// Assigne la valeur 12 a la valeur entier2.
+entier2 = 12
+
+// Affiche sur la sortie standard la valeur des variables entier1 et entier2.
+// Notez ici que la valeur entier1 n'est pas changée!
+// On à bien fait une copie de la valeur.
+fmt.Println(entier1, entier2) // Affiche: "45 12"
 ```
 
 == Structures de contrôle
@@ -147,14 +173,15 @@ switch maVariable {
 
 == Structures (1/2)
 
-- Une structure est un type composés de plusieurs autres types.
-- Ces valeurs sont appelées `attributs`
-- La valeur par défaut d'une structure est la valeur par defaut des types le composant.
+- Une structure est un type composé de plusieurs attributs
+- Ces attributs sont eux même typés
+- La valeur par défaut (zero value) d'une structure est la valeur par defaut des types la composant
 
 == Structures (2/2)
 
 ```golang
-// Declare un type Dog de type structure, composée d'un attribut Name de type string et d'un attribut Age de type entier.
+// Declare un type Dog de type structure, composée d'un attribut Name de type string
+// et d'un attribut Age de type entier.
 type Dog struct {
   Name  string
   Age   int
@@ -182,7 +209,7 @@ func main() {
 
 - Une fonction en go est déclarée à l'aide du mot clé `func`
 - Accepte des arguments et retourne une ou plusieurs valeurs
-- Conventionellement, une fonction qui peut échouer retourne un resultat et une erreur
+- Conventionellement, une fonction qui "peut échouer" retourne un resultat et une erreur
 
 == Déclarer et Appeler une fonction (2/2)
 
@@ -238,8 +265,47 @@ func main() {
 }
 ```
 
-== Passage par Valeur vs Passage par Référence?
+== Passage par Valeur vs Passage par Pointeur (1/3)
 
-== Arrays & Slices
+- Passer une variable en argument d'une fonction déclénche une copie de cette variable.
+- Cela signifie que la variable manipulé edans `changeName` est une variable différente (== se situe à une addresse différente en mémoire) de la variable manipulée dans la fonction main.
+- Cette variable possède la même valeur que la variable issue de main, c'est une copie
 
-== Maps
+== Passage par Valeur vs Passage par Pointeur(2/3)
+
+- Solution: au lieu de passer la 'valeur' de la variable dog, nous allons passer son adresse en mémoire.
+- C'est ce que l'on appelle un pointeur.
+
+== Passage par Valeur vs Passage par Pointeur(3/3)
+
+```golang
+// changeNameFixed accepte un argument de type pointeur sur Dog
+func changeNameFixed(dog *Dog) {
+  dog.Name = "roberto"
+}
+
+func main() {
+  dog := Dog {
+    Name: "jean-claude",
+    Age:  50,
+  }
+
+  // changeNameFixed est appellée en passant l'addresse de la variable dog
+  // matérialisée par le '&' devant le nom de la variable
+  changeNameFixed(&dog)
+
+  fmt.Println("Hello", dog.Name)
+}
+```
+
+== Pointeurs-Fu
+
+- Un pointeur est une addresse memoire représentée sur 64bits
+- La zero-value d'un pointeur est nil (0x000000)
+- Quand on essaye d'accéder a la valeur d'un pointeur a la valeur `nil`... :boom:
+
+== Exercice
+
+- Ecrire un programme qui accepte un nom en argument.
+- Si il n'y a pas d'argument, le programme indique qu'il faut passer un nom en argument et quite avec le status(1)
+- Si il y à un argument, alors le programme affiche le ..
