@@ -147,7 +147,7 @@ entier2 = 12
 fmt.Println(entier1, entier2) // Affiche: "45 12"
 ```
 
-== Structures de contrôle
+== Contrôle de Flot
 
 ```golang
 // Sans parenthèses, mais pas d'autres surprises :)
@@ -308,4 +308,20 @@ func main() {
 
 - Ecrire un programme qui accepte un nom en argument.
 - Si il n'y a pas d'argument, le programme indique qu'il faut passer un nom en argument et quite avec le status(1)
-- Si il y à un argument, alors le programme affiche le ..
+- Si il y à un argument, alors le programme affiche le ..trouver un truc rigolo a faire faire.
+
+
+== Collections
+
+Il existe trois types de collections en go.
+
+```golang
+// Déclare et initialise une variable appelée threeIntArrays de type tableau de trois entiers ([3]int) et l'initialise avec la valeur {1, 2, 3}
+threeIntArrays := [3]int{1, 2 ,3}
+
+// Delcare et innitialise une variable appelée stringsSlice de type slice de string ([]string) et 
+stringsSlice := []string{"hello", "there"}
+
+mapStringToFloat := map[string]float64{ "foo": 2934.3, "bar": 49393.3}
+```
+
